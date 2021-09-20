@@ -23,7 +23,7 @@ class CharacterMapper implements IMapper<Character, ApiCharacter> {
   }
 
   CharacterAliveStatus _getStatus(String value) => CharacterAliveStatus.values
-      .firstWhere((element) => element.toString() == value.toLowerCase());
-  CharacterGender _getGender(String value) =>
-      CharacterGender.values.firstWhere((element) => element.toString() == value.toLowerCase());
+      .firstWhere((element) => element.toString() == 'CharacterAliveStatus.${value.toLowerCase()}');
+  CharacterGender _getGender(String value) => CharacterGender.values
+      .firstWhere((element) => element.toString() == 'CharacterGender.${value.toLowerCase()}');
 }

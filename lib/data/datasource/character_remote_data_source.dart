@@ -26,11 +26,12 @@ class CharacterRemoteDataSource implements ICharacterRemoteDataSource {
       _getPersonsByUrl('https://rickandmortyapi.com/api/character/?page=$page');
 
   Future<List<ApiCharacter>> _getPersonsByUrl(String url) async {
+    print('url: ${url}');
+
     final responce = await client.get(
       Uri.parse(url),
       headers: {'Content-Type': 'application/json'},
     );
-
     if (responce.statusCode == 200) {
       final data = json.decode(responce.body);
       return (data['results'] as List).map((item) => ApiCharacter.fromJson(item)).toList();

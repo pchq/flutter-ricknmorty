@@ -8,6 +8,7 @@ class AllCharactersCase implements IUseCase<List<Character>, PagenParams> {
 
   AllCharactersCase(this.charactersRepository);
 
+  @override
   Future<List<Character>> call(PagenParams params) async {
     return await charactersRepository.getAllCharacters(params.page);
   }
@@ -16,7 +17,7 @@ class AllCharactersCase implements IUseCase<List<Character>, PagenParams> {
 class PagenParams extends Equatable {
   final int page;
 
-  PagenParams({required this.page});
+  const PagenParams({required this.page});
 
   @override
   List<Object?> get props => [page];

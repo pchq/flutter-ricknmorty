@@ -10,7 +10,7 @@ class AllCharactersCubit extends Cubit<AllCharactersState> {
   AllCharactersCubit({required this.allCharactersCase}) : super(AllCharactersInitial());
 
   int page = 1;
-  void loadPersons() async {
+  void loadAllCharacters() async {
     if (state is AllCharactersLoading) return;
 
     try {
