@@ -1,0 +1,32 @@
+import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:ricknmorty/domain/model/character.dart';
+import 'package:ricknmorty/domain/use_case/all_characters_case.dart';
+
+part 'all_characters_state.dart';
+
+class AllCharactersCubit extends Cubit<AllCharactersState> {
+  final AllCharactersCase allCharactersCase;
+  AllCharactersCubit({required this.allCharactersCase}) : super(AllCharactersInitial());
+
+  int page = 1;
+  void loadPersons() async {
+    if (state is AllCharactersLoading) return;
+
+    try {
+      var oldCharacters = <Character>[];
+      if (state is AllCharactersLoaded) {
+        oldCharacters = (state as AllCharactersLoaded).characters;
+      }
+
+      emit(AllCharactersLoading(oldCharacters, isFirst: page == 1));
+      final newCharacters = await allCharactersCase(PagenParams(page: page));
+      page++;
+      final characters = (state as AllCharactersLoading).oldCharacters;
+      characters.addAll(newCharacters);
+      emit(AllCharactersLoaded(characters: characters));
+    } catch (e) {
+      AllCharactersError(message: e.toString());
+    }
+  }
+}
