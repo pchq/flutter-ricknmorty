@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ricknmorty/common/theme_config.dart';
 import 'package:ricknmorty/core/service/locator_service.dart';
 import 'package:ricknmorty/presentation/bloc/all_characters/all_characters_cubit.dart';
 import 'package:ricknmorty/presentation/pages/characters_page.dart';
@@ -24,13 +25,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         home: const CharactersPage(),
-        theme: ThemeData(
-          // fontFamily: 'Rodchenko',
-          appBarTheme: const AppBarTheme(
-              titleTextStyle: TextStyle(
-                  // fontFamily: 'Rodchenko',
-                  )),
-        ),
+        theme: ThemeConfig.appTheme,
       ),
     );
   }

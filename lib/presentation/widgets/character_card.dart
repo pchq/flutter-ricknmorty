@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ricknmorty/common/theme_config.dart';
 import 'package:ricknmorty/domain/model/character.dart';
 import 'package:ricknmorty/presentation/pages/character_page.dart';
 import 'package:ricknmorty/presentation/widgets/cached_image.dart';
@@ -15,17 +16,21 @@ class CharacterCard extends StatelessWidget {
         MaterialPageRoute(builder: (context) => CharacterPage(person)),
       ),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        margin: const EdgeInsets.only(bottom: 5),
-        color: Colors.grey[200],
+        margin: const EdgeInsets.only(bottom: 10),
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          color: ThemeConfig.mediumGrey,
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+        ),
         child: Row(
           children: [
             Container(
-              width: 80,
-              height: 80,
+              width: 100,
+              height: 100,
               clipBehavior: Clip.antiAlias,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(50)),
+              decoration: BoxDecoration(
+                color: ThemeConfig.mediumGrey,
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
               ),
               child: CachedImage(person.image),
             ),

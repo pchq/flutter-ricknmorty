@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:ricknmorty/common/rnm_icons.dart';
 import 'package:ricknmorty/domain/model/character.dart';
 import 'package:ricknmorty/presentation/widgets/cached_image.dart';
 
@@ -55,13 +57,15 @@ class CharacterPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // _buildGender(),
-                  // _buildAliveStatus(),
-                  _buildInfoSection('Species', person.species),
+                  _buildGender(),
+                  _buildAliveStatus(),
+                  _buildInfoSection('Species',
+                      '${person.species} ${person.type == "" ? "" : "(" + person.type + ")"}'),
                   _buildInfoSection('Homeland', person.origin.name),
                   _buildInfoSection('Last location', person.location.name),
                   _buildInfoSection('Episodes', person.episode.length.toString()),
-                  _buildInfoSection('created', person.created.toString()),
+                  _buildInfoSection(
+                      'created', DateFormat('dd MMMM yyyy H:mm').format(person.created)),
                 ],
               ),
             ),
@@ -71,42 +75,52 @@ class CharacterPage extends StatelessWidget {
     );
   }
 
-  // Widget _buildGender() {
-  //   final Icon icon;
-  //   switch (person.gender) {
-  //     case 'Male':
-  //       icon = Icon(RnmIcons.male, color: Colors.blue);
-  //       break;
-  //     case 'Female':
-  //       icon = Icon(RnmIcons.female, color: Colors.pink);
-  //       break;
-  //     case 'Genderless':
-  //       icon = Icon(RnmIcons.genderless_1, color: Colors.purple);
-  //       break;
-  //     default: // unknown
-  //       icon = Icon(RnmIcons.unknowngender, color: Colors.black);
-  //   }
-  //   return _buildIconSection(icon, person.gender);
-  // }
+  Widget _buildGender() {
+    final Icon icon;
+    final String label;
+    switch (person.gender) {
+      case CharacterGender.male:
+        icon = const Icon(RnmIcons.male, color: Colors.blue);
+        label = 'Male';
+        break;
+      case CharacterGender.female:
+        icon = const Icon(RnmIcons.female, color: Colors.pink);
+        label = 'Female';
 
-  // Widget _buildAliveStatus() {
-  //   final Icon icon;
-  //   switch (person.status) {
-  //     case 'Alive':
-  //       icon = Icon(RnmIcons.alive, color: Colors.red);
-  //       break;
-  //     case 'Dead':
-  //       icon = Icon(RnmIcons.dead);
-  //       break;
-  //     default: // unknown
-  //       icon = Icon(RnmIcons.deadalive, color: Colors.blueGrey);
-  //   }
-  //   return _buildIconSection(icon, person.status);
-  // }
+        break;
+      case CharacterGender.genderless:
+        icon = const Icon(RnmIcons.genderless, color: Colors.purple);
+        label = 'Genderless';
+        break;
+      default: // unknown
+        icon = const Icon(RnmIcons.unknowngender, color: Colors.black);
+        label = 'Unknown gender';
+    }
+    return _buildIconSection(icon, label);
+  }
+
+  Widget _buildAliveStatus() {
+    final Icon icon;
+    final String label;
+    switch (person.status) {
+      case CharacterAliveStatus.alive:
+        icon = const Icon(RnmIcons.alive, color: Colors.red);
+        label = 'Alive';
+        break;
+      case CharacterAliveStatus.dead:
+        icon = const Icon(RnmIcons.dead);
+        label = 'Dead';
+        break;
+      default: // unknown
+        icon = const Icon(RnmIcons.deadalive, color: Colors.blueGrey);
+        label = 'Dead or alive unknown';
+    }
+    return _buildIconSection(icon, label);
+  }
 
   Widget _buildIconSection(Icon icon, String text) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 5),
+      padding: const EdgeInsets.only(bottom: 10),
       child: Row(
         children: [
           icon,
@@ -124,8 +138,10 @@ class CharacterPage extends StatelessWidget {
 
   Widget _buildInfoSection(String title, String value) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 5),
+      padding: const EdgeInsets.only(bottom: 10),
       child: Row(
+        textBaseline: TextBaseline.alphabetic,
+        crossAxisAlignment: CrossAxisAlignment.baseline,
         children: [
           Text(
             '$title: ',
@@ -134,10 +150,12 @@ class CharacterPage extends StatelessWidget {
               color: Colors.grey,
             ),
           ),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 20,
+          Expanded(
+            child: Text(
+              value,
+              style: const TextStyle(
+                fontSize: 20,
+              ),
             ),
           ),
         ],

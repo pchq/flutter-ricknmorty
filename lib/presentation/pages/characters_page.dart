@@ -20,27 +20,30 @@ class CharactersPage extends StatelessWidget {
           )
         ],
       ),
-      body: BlocBuilder<AllCharactersCubit, AllCharactersState>(
-        builder: (context, state) {
-          if (state is AllCharactersLoading) {
-            return const CircleLoader();
-          } else if (state is AllCharactersLoaded) {
-            final List<Character> personsList = state.characters;
-            return ListView.builder(
-              itemCount: personsList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return CharacterCard(personsList[index]);
-              },
-            );
-          } else if (state is AllCharactersError) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
-            return Container();
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Unexpected bloc state error: ${state.toString()}')));
-            return Container();
-          }
-        },
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: BlocBuilder<AllCharactersCubit, AllCharactersState>(
+          builder: (context, state) {
+            if (state is AllCharactersLoading) {
+              return const CircleLoader();
+            } else if (state is AllCharactersLoaded) {
+              final List<Character> personsList = state.characters;
+              return ListView.builder(
+                itemCount: personsList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return CharacterCard(personsList[index]);
+                },
+              );
+            } else if (state is AllCharactersError) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
+              return Container();
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Unexpected bloc state error: ${state.toString()}')));
+              return Container();
+            }
+          },
+        ),
       ),
     );
   }
