@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ricknmorty/common/rnm_icons.dart';
+import 'package:ricknmorty/common/theme_config.dart';
 import 'package:ricknmorty/domain/model/character.dart';
 import 'package:ricknmorty/presentation/widgets/cached_image.dart';
 
@@ -25,7 +26,13 @@ class CharacterPage extends StatelessWidget {
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
-              title: Text(person.name),
+              title: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Text(
+                  person.name,
+                  textAlign: TextAlign.center,
+                ),
+              ),
               background: Stack(
                 children: [
                   CachedImage(person.image),
@@ -80,20 +87,20 @@ class CharacterPage extends StatelessWidget {
     final String label;
     switch (person.gender) {
       case CharacterGender.male:
-        icon = const Icon(RnmIcons.male, color: Colors.blue);
+        icon = Icon(RnmIcons.male, color: ThemeConfig.blue);
         label = 'Male';
         break;
       case CharacterGender.female:
-        icon = const Icon(RnmIcons.female, color: Colors.pink);
+        icon = Icon(RnmIcons.female, color: ThemeConfig.pink);
         label = 'Female';
 
         break;
       case CharacterGender.genderless:
-        icon = const Icon(RnmIcons.genderless, color: Colors.purple);
+        icon = Icon(RnmIcons.genderless, color: ThemeConfig.green);
         label = 'Genderless';
         break;
       default: // unknown
-        icon = const Icon(RnmIcons.unknowngender, color: Colors.black);
+        icon = Icon(RnmIcons.unknowngender, color: ThemeConfig.yellow);
         label = 'Unknown gender';
     }
     return _buildIconSection(icon, label);
@@ -104,15 +111,15 @@ class CharacterPage extends StatelessWidget {
     final String label;
     switch (person.status) {
       case CharacterAliveStatus.alive:
-        icon = const Icon(RnmIcons.alive, color: Colors.red);
+        icon = Icon(RnmIcons.alive, color: ThemeConfig.red);
         label = 'Alive';
         break;
       case CharacterAliveStatus.dead:
-        icon = const Icon(RnmIcons.dead);
+        icon = Icon(RnmIcons.dead, color: ThemeConfig.lightGrey);
         label = 'Dead';
         break;
       default: // unknown
-        icon = const Icon(RnmIcons.deadalive, color: Colors.blueGrey);
+        icon = Icon(RnmIcons.deadalive, color: ThemeConfig.orange);
         label = 'Dead or alive unknown';
     }
     return _buildIconSection(icon, label);

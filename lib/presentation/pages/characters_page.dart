@@ -6,17 +6,28 @@ import 'package:ricknmorty/presentation/widgets/character_card.dart';
 import 'package:ricknmorty/presentation/widgets/circle_loader.dart';
 
 class CharactersPage extends StatelessWidget {
-  const CharactersPage({Key? key}) : super(key: key);
+  CharactersPage({Key? key}) : super(key: key);
+
+  // ToDo Вынести список в отдельный виджет
+  final ScrollController _scrollController = ScrollController();
+  void _setupScrollController(BuildContext context) {
+    _scrollController.addListener(() {
+      if (_scrollController.position.atEdge && _scrollController.position.pixels != 0) {
+        context.read<AllCharactersCubit>().loadAllCharacters();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    _setupScrollController(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Rick\'n\'Morty'),
         actions: [
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.search_sharp),
+            icon: const Icon(Icons.filter_list),
           )
         ],
       ),
@@ -24,24 +35,31 @@ class CharactersPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: BlocBuilder<AllCharactersCubit, AllCharactersState>(
           builder: (context, state) {
-            if (state is AllCharactersLoading) {
+            bool isLoading = false;
+            List<Character> characters = [];
+            if (state is AllCharactersLoading && state.isFirstLoading) {
               return const CircleLoader();
+            } else if (state is AllCharactersLoading) {
+              isLoading = true;
+              characters = state.oldCharacters;
             } else if (state is AllCharactersLoaded) {
-              final List<Character> personsList = state.characters;
-              return ListView.builder(
-                itemCount: personsList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return CharacterCard(personsList[index]);
-                },
-              );
+              isLoading = false;
+              characters = state.characters;
             } else if (state is AllCharactersError) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
-              return Container();
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text('Unexpected bloc state error: ${state.toString()}')));
-              return Container();
             }
+            return ListView.builder(
+              controller: _scrollController,
+              itemCount: characters.length + (isLoading ? 1 : 0),
+              itemBuilder: (BuildContext context, int index) {
+                return index < characters.length
+                    ? CharacterCard(characters[index])
+                    : const CircleLoader();
+              },
+            );
           },
         ),
       ),

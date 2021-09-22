@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ricknmorty/common/theme_config.dart';
 import 'package:ricknmorty/core/service/locator_service.dart';
@@ -6,6 +7,9 @@ import 'package:ricknmorty/presentation/bloc/all_characters/all_characters_cubit
 import 'package:ricknmorty/presentation/pages/characters_page.dart';
 
 void main() async {
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+  ));
   WidgetsFlutterBinding.ensureInitialized();
   await LocatorService().init();
   runApp(MyApp());
@@ -24,7 +28,7 @@ class MyApp extends StatelessWidget {
             create: (context) => locator<AllCharactersCubit>()..loadAllCharacters()),
       ],
       child: MaterialApp(
-        home: const CharactersPage(),
+        home: CharactersPage(),
         theme: ThemeConfig.appTheme,
       ),
     );

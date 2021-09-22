@@ -34,16 +34,21 @@ class CharacterCard extends StatelessWidget {
               ),
               child: CachedImage(person.image),
             ),
-            const SizedBox(width: 20),
-            Column(
-              children: [
-                Text(
-                  person.name,
-                  style: const TextStyle(
-                    fontSize: 20,
-                  ),
-                )
-              ],
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      person.name,
+                      style: const TextStyle(
+                        fontSize: 20,
+                      ),
+                    )
+                  ],
+                ),
+              ),
             )
           ],
         ),

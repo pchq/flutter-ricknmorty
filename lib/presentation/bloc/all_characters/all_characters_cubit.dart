@@ -19,7 +19,7 @@ class AllCharactersCubit extends Cubit<AllCharactersState> {
         oldCharacters = (state as AllCharactersLoaded).characters;
       }
 
-      emit(AllCharactersLoading(oldCharacters, isFirst: page == 1));
+      emit(AllCharactersLoading(oldCharacters, isFirstLoading: page == 1));
       final newCharacters = await allCharactersCase(PagenParams(page: page));
       page++;
       final characters = (state as AllCharactersLoading).oldCharacters;

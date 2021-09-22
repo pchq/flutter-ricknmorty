@@ -11,11 +11,11 @@ class AllCharactersInitial extends AllCharactersState {}
 
 class AllCharactersLoading extends AllCharactersState {
   final List<Character> oldCharacters;
-  final bool isFirst;
+  final bool isFirstLoading;
 
   const AllCharactersLoading(
     this.oldCharacters, {
-    this.isFirst = false,
+    this.isFirstLoading = false,
   });
 
   @override
