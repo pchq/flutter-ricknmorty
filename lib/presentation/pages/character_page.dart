@@ -87,20 +87,19 @@ class CharacterPage extends StatelessWidget {
     final String label;
     switch (person.gender) {
       case CharacterGender.male:
-        icon = Icon(RnmIcons.male, color: ThemeConfig.blue);
+        icon = const Icon(RnmIcons.male, color: ThemeConfig.blue);
         label = 'Male';
         break;
       case CharacterGender.female:
-        icon = Icon(RnmIcons.female, color: ThemeConfig.pink);
+        icon = const Icon(RnmIcons.female, color: ThemeConfig.pink);
         label = 'Female';
-
         break;
       case CharacterGender.genderless:
-        icon = Icon(RnmIcons.genderless, color: ThemeConfig.green);
+        icon = const Icon(RnmIcons.genderless, color: ThemeConfig.green);
         label = 'Genderless';
         break;
       default: // unknown
-        icon = Icon(RnmIcons.unknowngender, color: ThemeConfig.yellow);
+        icon = const Icon(RnmIcons.unknowngender, color: ThemeConfig.yellow);
         label = 'Unknown gender';
     }
     return _buildIconSection(icon, label);
@@ -111,15 +110,15 @@ class CharacterPage extends StatelessWidget {
     final String label;
     switch (person.status) {
       case CharacterAliveStatus.alive:
-        icon = Icon(RnmIcons.alive, color: ThemeConfig.red);
+        icon = const Icon(RnmIcons.alive, color: ThemeConfig.red);
         label = 'Alive';
         break;
       case CharacterAliveStatus.dead:
-        icon = Icon(RnmIcons.dead, color: ThemeConfig.lightGrey);
+        icon = const Icon(RnmIcons.dead, color: ThemeConfig.lightGrey);
         label = 'Dead';
         break;
       default: // unknown
-        icon = Icon(RnmIcons.deadalive, color: ThemeConfig.orange);
+        icon = const Icon(RnmIcons.deadalive2, color: ThemeConfig.orange);
         label = 'Dead or alive unknown';
     }
     return _buildIconSection(icon, label);
@@ -130,9 +129,14 @@ class CharacterPage extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 10),
       child: Row(
         children: [
-          icon,
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: Center(
+              child: icon,
+            ),
+          ),
           Text(
-            ' $text',
+            '$text',
             style: const TextStyle(
               fontSize: 16,
               // color: Colors.grey,

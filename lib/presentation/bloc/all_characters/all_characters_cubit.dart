@@ -26,7 +26,7 @@ class AllCharactersCubit extends Cubit<AllCharactersState> {
       characters.addAll(newCharacters);
       emit(AllCharactersLoaded(characters: characters));
     } catch (e) {
-      AllCharactersError(message: e.toString());
+      emit(AllCharactersError(message: e.toString()));
     }
   }
 }

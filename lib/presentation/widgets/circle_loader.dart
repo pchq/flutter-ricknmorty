@@ -6,8 +6,8 @@ class CircleLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
+    return const Padding(
+      padding: EdgeInsets.all(10),
       child: Center(
         child: CircularProgressIndicator(
           color: ThemeConfig.green,

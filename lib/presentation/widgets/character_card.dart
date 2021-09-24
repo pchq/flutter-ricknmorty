@@ -18,9 +18,9 @@ class CharacterCard extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.only(bottom: 10),
         clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: ThemeConfig.mediumGrey,
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
         child: Row(
           children: [
@@ -28,9 +28,9 @@ class CharacterCard extends StatelessWidget {
               width: 100,
               height: 100,
               clipBehavior: Clip.antiAlias,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: ThemeConfig.mediumGrey,
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
               child: CachedImage(person.image),
             ),
