@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:ricknmorty/common/helper.dart';
 
+import 'package:ricknmorty/common/helper.dart';
 import 'package:ricknmorty/domain/model/character.dart';
 import 'package:ricknmorty/domain/repository/i_characters_repository.dart';
 import 'package:ricknmorty/domain/use_case/i_use_case.dart';

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:ricknmorty/core/error/exception.dart';
 import 'package:ricknmorty/data/api_model/api_character.dart';
 import 'package:ricknmorty/domain/use_case/get_characters_case.dart';
 

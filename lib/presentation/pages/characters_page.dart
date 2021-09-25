@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ricknmorty/common/rnm_icons.dart';
+import 'package:ricknmorty/common/theme_config.dart';
 
 import 'package:ricknmorty/domain/model/character.dart';
 import 'package:ricknmorty/presentation/bloc/characters/characters_cubit.dart';
@@ -54,15 +56,32 @@ class CharactersPage extends StatelessWidget {
 
             isLoading = state is CharactersLoading;
 
-            return ListView.builder(
-              controller: _scrollController,
-              itemCount: characters.length + (isLoading ? 1 : 0),
-              itemBuilder: (BuildContext context, int index) {
-                return index < characters.length
-                    ? CharacterCard(characters[index])
-                    : const CircleLoader();
-              },
-            );
+            return characters.isEmpty
+                ? Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          'Nobody found',
+                          style: TextStyle(fontSize: 24, color: ThemeConfig.lightGrey),
+                        ),
+                        Icon(
+                          RnmIcons.fuck,
+                          size: 36,
+                          color: ThemeConfig.lightGrey,
+                        )
+                      ],
+                    ),
+                  )
+                : ListView.builder(
+                    controller: _scrollController,
+                    itemCount: characters.length + (isLoading ? 1 : 0),
+                    itemBuilder: (BuildContext context, int index) {
+                      return index < characters.length
+                          ? CharacterCard(characters[index])
+                          : const CircleLoader();
+                    },
+                  );
           },
         ),
       ),

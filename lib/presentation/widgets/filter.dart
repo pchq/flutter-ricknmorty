@@ -20,10 +20,17 @@ class _FilterState extends State<Filter> {
 
   late CharactersFilter currentFilter;
 
+  CharacterAliveStatus? _status;
+  CharacterGender? _gender;
+  final TextEditingController _nameController = TextEditingController();
+
   @override
   void initState() {
     charactersCubit = context.read<CharactersCubit>();
     currentFilter = charactersCubit.currentFilter;
+    _status = currentFilter.status;
+    _gender = currentFilter.gender;
+    _nameController.text = currentFilter.name ?? '';
     super.initState();
   }
 
@@ -31,21 +38,31 @@ class _FilterState extends State<Filter> {
   Widget build(BuildContext context) {
     const double padding = 15;
 
-    print('currentFilter: $currentFilter');
     return Wrap(
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: padding),
+          padding: const EdgeInsets.only(left: padding),
           margin: const EdgeInsets.only(bottom: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                'Filter',
-                style: TextStyle(
-                  fontSize: 24,
-                  color: ThemeConfig.green.withOpacity(.8),
+              Expanded(
+                child: Text(
+                  'Filter',
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: ThemeConfig.green.withOpacity(.8),
+                  ),
+                ),
+              ),
+              IconButton(
+                iconSize: 28,
+                padding: EdgeInsets.zero,
+                onPressed: () => _setNewFilter(true),
+                icon: Icon(
+                  Icons.delete_forever_outlined,
+                  color: ThemeConfig.orange.withOpacity(.8),
                 ),
               ),
               IconButton(
@@ -56,7 +73,7 @@ class _FilterState extends State<Filter> {
                   Icons.close,
                   color: ThemeConfig.green.withOpacity(.8),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -64,17 +81,13 @@ class _FilterState extends State<Filter> {
           padding: const EdgeInsets.symmetric(horizontal: padding),
           margin: const EdgeInsets.only(bottom: 20),
           child: TextFormField(
+            controller: _nameController,
             onChanged: (value) {
-              charactersCubit.load(CharactersFilter(
-                name: value,
-                gender: currentFilter.gender,
-                status: currentFilter.status,
-              ));
+              _setNewFilter();
             },
             style: const TextStyle(
               fontSize: 20,
             ),
-            initialValue: currentFilter.name ?? '',
             cursorColor: ThemeConfig.green,
             decoration: const InputDecoration(
               contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 5),
@@ -143,17 +156,36 @@ class _FilterState extends State<Filter> {
             items: radioItems,
             selected: selected,
             onTap: (value) {
-              CharactersFilter newFilter = CharactersFilter(
-                name: currentFilter.name,
-                gender: title == 'Gender' ? value : currentFilter.gender,
-                status: title == 'Status' ? value : currentFilter.status,
-              );
-              charactersCubit.load(newFilter);
-              setState(() {
-                currentFilter = newFilter;
-              });
+              if (title == 'Gender') {
+                _gender = value;
+                _setNewFilter();
+              } else if (title == 'Status') {
+                _status = value;
+                _setNewFilter();
+              }
             },
           ),
         ],
       );
+
+  void _setNewFilter([bool clean = false]) {
+    CharactersFilter filter = clean
+        ? const CharactersFilter()
+        : CharactersFilter(
+            name: _nameController.text,
+            status: _status,
+            gender: _gender,
+          );
+    if (filter != currentFilter) {
+      charactersCubit.load(filter);
+      setState(() {
+        currentFilter = filter;
+        if (clean) {
+          _nameController.text = '';
+        }
+        _status = currentFilter.status;
+        _gender = currentFilter.gender;
+      });
+    }
+  }
 }

@@ -12,16 +12,11 @@ class CharactersCubit extends Cubit<CharactersState> {
   int page = 1;
   CharactersFilter currentFilter = const CharactersFilter();
   void load([CharactersFilter? newFilter]) async {
-    print('===============================');
-    print('load state: $state');
     if (state is CharactersLoading) return;
 
     newFilter ??= const CharactersFilter();
     List<Character> oldCharacters = [];
 
-    print('currentFilter: $currentFilter');
-    print('newFilter: $newFilter');
-    print('currentFilter == lastFilter: ${currentFilter == newFilter}');
     try {
       if (state is CharactersLoaded) {
         currentFilter = (state as CharactersLoaded).usedFilter;
@@ -33,8 +28,6 @@ class CharactersCubit extends Cubit<CharactersState> {
           oldCharacters = (state as CharactersLoaded).characters;
         }
       }
-
-      print('page: $page');
 
       emit(CharactersLoading(oldCharacters, isFirstLoading: page == 1));
 

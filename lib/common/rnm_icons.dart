@@ -25,10 +25,11 @@ class RnmIcons {
   static const IconData dead = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData deadalive = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData female = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData genderless = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData male = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData transgender = IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData unknowngender = IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData deadalive2 = IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData multigender = IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData fuck = IconData(0xe80a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData genderless = IconData(0xe80b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
