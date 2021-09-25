@@ -136,7 +136,7 @@ class CharacterPage extends StatelessWidget {
             ),
           ),
           Text(
-            '$text',
+            text,
             style: const TextStyle(
               fontSize: 16,
               // color: Colors.grey,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:ricknmorty/domain/model/character.dart';
-import 'package:ricknmorty/presentation/bloc/all_characters/all_characters_cubit.dart';
+import 'package:ricknmorty/presentation/bloc/characters/characters_cubit.dart';
 import 'package:ricknmorty/presentation/widgets/character_card.dart';
 import 'package:ricknmorty/presentation/widgets/circle_loader.dart';
 import 'package:ricknmorty/presentation/widgets/filter.dart';
@@ -12,9 +12,10 @@ class CharactersPage extends StatelessWidget {
 
   final ScrollController _scrollController = ScrollController();
   void _setupScrollController(BuildContext context) {
+    CharactersCubit charactersCubit = context.read<CharactersCubit>();
     _scrollController.addListener(() {
       if (_scrollController.position.atEdge && _scrollController.position.pixels != 0) {
-        context.read<AllCharactersCubit>().loadAllCharacters();
+        charactersCubit.load(charactersCubit.currentFilter);
       }
     });
   }
@@ -22,6 +23,7 @@ class CharactersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _setupScrollController(context);
+    List<Character> characters = [];
     return Scaffold(
       appBar: AppBar(
         title: const Text('Rick\'n\'Morty'),
@@ -34,24 +36,23 @@ class CharactersPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: BlocConsumer<AllCharactersCubit, AllCharactersState>(
+        child: BlocConsumer<CharactersCubit, CharactersState>(
           listener: (context, state) {
-            if (state is AllCharactersError) {
+            if (state is CharactersError) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
             }
           },
           builder: (context, state) {
             bool isLoading = false;
-            List<Character> characters = [];
-            if (state is AllCharactersLoading && state.isFirstLoading) {
+            if (state is CharactersLoading && state.isFirstLoading) {
               return const CircleLoader();
-            } else if (state is AllCharactersLoading) {
+            } else if (state is CharactersLoading) {
               characters = state.oldCharacters;
-            } else if (state is AllCharactersLoaded) {
+            } else if (state is CharactersLoaded) {
               characters = state.characters;
             }
 
-            isLoading = state is AllCharactersLoading;
+            isLoading = state is CharactersLoading;
 
             return ListView.builder(
               controller: _scrollController,

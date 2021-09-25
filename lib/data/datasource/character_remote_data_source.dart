@@ -3,17 +3,11 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:ricknmorty/core/error/exception.dart';
 import 'package:ricknmorty/data/api_model/api_character.dart';
+import 'package:ricknmorty/domain/use_case/get_characters_case.dart';
 
 abstract class ICharacterRemoteDataSource {
-  /// Calls https://rickandmortyapi.com/api/character/?page={page} endpoint
-  ///
-  /// Throws [ServerException]
-  Future<List<ApiCharacter>> getAll(int page);
-
-  /// Calls https://rickandmortyapi.com/api/character/?name={name}&gender={gender} endpoint
-  ///
-  /// ToDo Filter
-
+  /// Calls https://rickandmortyapi.com/api/character/??page={page}&name={name}&gender={gender}&... endpoint
+  Future<List<ApiCharacter>> dataCharacters(int page, CharactersFilter? filter);
 }
 
 class CharacterRemoteDataSource implements ICharacterRemoteDataSource {
@@ -22,21 +16,26 @@ class CharacterRemoteDataSource implements ICharacterRemoteDataSource {
   CharacterRemoteDataSource({required this.client});
 
   @override
-  Future<List<ApiCharacter>> getAll(int page) =>
-      _getPersonsByUrl('https://rickandmortyapi.com/api/character/?page=$page');
+  Future<List<ApiCharacter>> dataCharacters(int page, CharactersFilter? filter) async {
+    List<ApiCharacter> characters = await _getPersonsByUrl(
+        'https://rickandmortyapi.com/api/character/?page=$page${filter?.toQueryString()}');
+    return characters;
+  }
 
   Future<List<ApiCharacter>> _getPersonsByUrl(String url) async {
-    print('url: ${url}');
-
-    final responce = await client.get(
-      Uri.parse(url),
-      headers: {'Content-Type': 'application/json'},
-    );
-    if (responce.statusCode == 200) {
-      final data = json.decode(responce.body);
-      return (data['results'] as List).map((item) => ApiCharacter.fromJson(item)).toList();
-    } else {
-      throw ServerException(message: 'ServerException \nstatus: ${responce.statusCode}');
+    try {
+      final responce = await client.get(
+        Uri.parse(url),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (responce.statusCode == 200) {
+        final data = json.decode(responce.body);
+        return (data['results'] as List).map((item) => ApiCharacter.fromJson(item)).toList();
+      } else {
+        return [];
+      }
+    } catch (e) {
+      throw Exception(e);
     }
   }
 }

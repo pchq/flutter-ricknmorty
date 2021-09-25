@@ -1,6 +1,6 @@
 import 'package:ricknmorty/domain/model/character.dart';
+import 'package:ricknmorty/domain/use_case/get_characters_case.dart';
 
 abstract class ICharactersRepository {
-  Future<List<Character>> getAllCharacters(int page);
-  Future<List<Character>> filterCharacters(Map<String, dynamic> filters);
+  Future<List<Character>> getCharactersRepo(int page, CharactersFilter filter);
 }

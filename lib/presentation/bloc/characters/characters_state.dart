@@ -1,19 +1,19 @@
-part of 'all_characters_cubit.dart';
+part of 'characters_cubit.dart';
 
-abstract class AllCharactersState extends Equatable {
-  const AllCharactersState();
+abstract class CharactersState extends Equatable {
+  const CharactersState();
 
   @override
   List<Object> get props => [];
 }
 
-class AllCharactersInitial extends AllCharactersState {}
+class CharactersInitial extends CharactersState {}
 
-class AllCharactersLoading extends AllCharactersState {
+class CharactersLoading extends CharactersState {
   final List<Character> oldCharacters;
   final bool isFirstLoading;
 
-  const AllCharactersLoading(
+  const CharactersLoading(
     this.oldCharacters, {
     this.isFirstLoading = false,
   });
@@ -22,21 +22,23 @@ class AllCharactersLoading extends AllCharactersState {
   List<Object> get props => [oldCharacters];
 }
 
-class AllCharactersLoaded extends AllCharactersState {
+class CharactersLoaded extends CharactersState {
   final List<Character> characters;
+  final CharactersFilter usedFilter;
 
-  const AllCharactersLoaded({
+  const CharactersLoaded({
     required this.characters,
+    required this.usedFilter,
   });
 
   @override
   List<Object> get props => [characters];
 }
 
-class AllCharactersError extends AllCharactersState {
+class CharactersError extends CharactersState {
   final String message;
 
-  const AllCharactersError({
+  const CharactersError({
     required this.message,
   });
 

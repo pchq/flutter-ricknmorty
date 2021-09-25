@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ricknmorty/common/theme_config.dart';
 import 'package:ricknmorty/core/service/locator_service.dart';
-import 'package:ricknmorty/presentation/bloc/all_characters/all_characters_cubit.dart';
+import 'package:ricknmorty/presentation/bloc/characters/characters_cubit.dart';
 import 'package:ricknmorty/presentation/pages/characters_page.dart';
 
 void main() async {
@@ -24,8 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<AllCharactersCubit>(
-            create: (context) => locator<AllCharactersCubit>()..loadAllCharacters()),
+        BlocProvider<CharactersCubit>(create: (context) => locator<CharactersCubit>()..load()),
       ],
       child: MaterialApp(
         home: CharactersPage(),

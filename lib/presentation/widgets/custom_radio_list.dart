@@ -4,11 +4,13 @@ import 'package:ricknmorty/common/theme_config.dart';
 
 class CustomRadioList extends StatefulWidget {
   final List items;
+  final dynamic selected;
   final ValueChanged? onTap;
 
   const CustomRadioList({
     Key? key,
     required this.items,
+    this.selected,
     this.onTap,
   }) : super(key: key);
 
@@ -21,6 +23,7 @@ class _CustomRadioListState extends State<CustomRadioList> {
 
   @override
   Widget build(BuildContext context) {
+    _selected = widget.selected;
     return Wrap(
       children: _buildList(),
     );

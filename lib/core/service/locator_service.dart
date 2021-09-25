@@ -4,8 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:ricknmorty/data/datasource/character_remote_data_source.dart';
 import 'package:ricknmorty/data/repository/character_repository.dart';
 import 'package:ricknmorty/domain/repository/i_characters_repository.dart';
-import 'package:ricknmorty/domain/use_case/all_characters_case.dart';
-import 'package:ricknmorty/presentation/bloc/all_characters/all_characters_cubit.dart';
+import 'package:ricknmorty/domain/use_case/get_characters_case.dart';
+import 'package:ricknmorty/presentation/bloc/characters/characters_cubit.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
 class LocatorService {
@@ -13,10 +13,10 @@ class LocatorService {
 
   Future<void> init() async {
     // BLoC
-    locator.registerFactory(() => AllCharactersCubit(allCharactersCase: locator()));
+    locator.registerFactory(() => CharactersCubit(getCharactersCase: locator()));
 
     // UseCases
-    locator.registerLazySingleton(() => AllCharactersCase(locator()));
+    locator.registerLazySingleton(() => GetCharactersCase(locator()));
     // toDo locator.registerLazySingleton(() => FilterCharactersCase(locator()));
 
     // Repositories

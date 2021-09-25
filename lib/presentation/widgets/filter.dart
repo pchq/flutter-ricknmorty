@@ -1,15 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:ricknmorty/common/rnm_icons.dart';
 import 'package:ricknmorty/common/theme_config.dart';
 import 'package:ricknmorty/domain/model/character.dart';
+import 'package:ricknmorty/domain/use_case/get_characters_case.dart';
+import 'package:ricknmorty/presentation/bloc/characters/characters_cubit.dart';
 import 'package:ricknmorty/presentation/widgets/custom_radio_list.dart';
 
-class Filter extends StatelessWidget {
+class Filter extends StatefulWidget {
   const Filter({Key? key}) : super(key: key);
+
+  @override
+  State<Filter> createState() => _FilterState();
+}
+
+class _FilterState extends State<Filter> {
+  late CharactersCubit charactersCubit;
+
+  late CharactersFilter currentFilter;
+
+  @override
+  void initState() {
+    charactersCubit = context.read<CharactersCubit>();
+    currentFilter = charactersCubit.currentFilter;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     const double padding = 15;
+
+    print('currentFilter: $currentFilter');
     return Wrap(
       children: [
         Container(
@@ -42,10 +64,17 @@ class Filter extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: padding),
           margin: const EdgeInsets.only(bottom: 20),
           child: TextFormField(
-            onChanged: (value) {},
+            onChanged: (value) {
+              charactersCubit.load(CharactersFilter(
+                name: value,
+                gender: currentFilter.gender,
+                status: currentFilter.status,
+              ));
+            },
             style: const TextStyle(
               fontSize: 20,
             ),
+            initialValue: currentFilter.name ?? '',
             cursorColor: ThemeConfig.green,
             decoration: const InputDecoration(
               contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 5),
@@ -70,18 +99,20 @@ class Filter extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: padding - 5),
           margin: const EdgeInsets.only(bottom: 20),
-          child: _buildSection('Status', CharacterAliveStatus.values, RnmIcons.deadalive2),
+          child: _buildSection(
+              'Status', CharacterAliveStatus.values, currentFilter.status, RnmIcons.deadalive2),
         ),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: padding - 5),
           margin: const EdgeInsets.only(bottom: 20),
-          child: _buildSection('Gender', CharacterGender.values, RnmIcons.multigender),
+          child: _buildSection(
+              'Gender', CharacterGender.values, currentFilter.gender, RnmIcons.multigender),
         ),
       ],
     );
   }
 
-  Widget _buildSection(String title, List radioItems, IconData icon) => Column(
+  Widget _buildSection(String title, List radioItems, dynamic selected, IconData icon) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
@@ -110,8 +141,17 @@ class Filter extends StatelessWidget {
           ),
           CustomRadioList(
             items: radioItems,
+            selected: selected,
             onTap: (value) {
-              print(value);
+              CharactersFilter newFilter = CharactersFilter(
+                name: currentFilter.name,
+                gender: title == 'Gender' ? value : currentFilter.gender,
+                status: title == 'Status' ? value : currentFilter.status,
+              );
+              charactersCubit.load(newFilter);
+              setState(() {
+                currentFilter = newFilter;
+              });
             },
           ),
         ],
