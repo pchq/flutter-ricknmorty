@@ -16,7 +16,7 @@ class CharacterCard extends StatelessWidget {
         MaterialPageRoute(builder: (context) => CharacterPage(person)),
       ),
       child: Container(
-        margin: const EdgeInsets.only(bottom: 10),
+        margin: const EdgeInsets.symmetric(vertical: 10),
         clipBehavior: Clip.antiAlias,
         decoration: const BoxDecoration(
           color: ThemeConfig.mediumGrey,
