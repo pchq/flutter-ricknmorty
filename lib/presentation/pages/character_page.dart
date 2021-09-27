@@ -26,24 +26,24 @@ class CharacterPage extends StatelessWidget {
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
-              title: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Text(
-                  person.name,
-                  textAlign: TextAlign.center,
-                ),
+              title: Text(
+                person.name,
+                textAlign: TextAlign.center,
               ),
+              titlePadding: const EdgeInsets.only(bottom: 15, left: 15, right: 15),
               background: Stack(
+                alignment: Alignment.bottomCenter,
                 children: [
                   CachedImage(person.image),
                   Container(
                     height: imgHeight,
+                    padding: EdgeInsets.zero,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         stops: const [
-                          .26,
+                          .1,
                           1,
                         ],
                         colors: [
@@ -56,7 +56,7 @@ class CharacterPage extends StatelessWidget {
                 ],
               ),
             ),
-            expandedHeight: imgHeight - 25,
+            expandedHeight: imgHeight,
           ),
           SliverToBoxAdapter(
             child: Container(
@@ -71,8 +71,7 @@ class CharacterPage extends StatelessWidget {
                   _buildInfoSection('Homeland', person.origin.name),
                   _buildInfoSection('Last location', person.location.name),
                   _buildInfoSection('Episodes', person.episode.length.toString()),
-                  _buildInfoSection(
-                      'created', DateFormat('dd MMMM yyyy H:mm').format(person.created)),
+                  _buildInfoSection('Created', DateFormat('d MMMM yyyy').format(person.created)),
                 ],
               ),
             ),

@@ -1,3 +1,5 @@
+import 'package:ricknmorty/core/error/exception.dart';
+import 'package:ricknmorty/data/datasource/character_local_data_source.dart';
 import 'package:ricknmorty/data/datasource/character_remote_data_source.dart';
 import 'package:ricknmorty/data/mapper/character_mapper.dart';
 import 'package:ricknmorty/domain/model/character.dart';
@@ -6,12 +8,12 @@ import 'package:ricknmorty/domain/use_case/get_characters_case.dart';
 
 class CharactersRepository implements ICharactersRepository {
   ICharacterRemoteDataSource remoteDataSource;
-  // ICharacterLlcalDataSource localDataSource;
+  ICharacterLocalDataSource localDataSource;
   // INetworkInfo networkInfo;
 
   CharactersRepository({
     required this.remoteDataSource,
-    // required this.localDataSource,
+    required this.localDataSource,
     // required this.networkInfo,
   });
 
@@ -29,12 +31,12 @@ class CharactersRepository implements ICharactersRepository {
       }
       // ignore: dead_code
     } else {
-      // try {
-      //   final localPersons = await localDataSource.getLastPersonsFromCache();
-      //   return Right(localPersons);
-      // } on CacheException {
-      //   return Left(CacheFailure());
-      // }
+      try {
+        final characters = await localDataSource.charactersFromCache(filter.toString());
+        return characters.map((item) => CharacterMapper()(item)).toList();
+      } catch (e) {
+        throw Exception(e);
+      }
     }
   }
 }

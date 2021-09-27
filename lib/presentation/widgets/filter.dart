@@ -56,15 +56,16 @@ class _FilterState extends State<Filter> {
                   ),
                 ),
               ),
-              IconButton(
-                iconSize: 28,
-                padding: EdgeInsets.zero,
-                onPressed: () => _setNewFilter(true),
-                icon: Icon(
-                  Icons.delete_forever_outlined,
-                  color: ThemeConfig.orange.withOpacity(.8),
+              if (currentFilter != const CharactersFilter())
+                IconButton(
+                  iconSize: 28,
+                  padding: EdgeInsets.zero,
+                  onPressed: () => _setNewFilter(true),
+                  icon: Icon(
+                    Icons.delete_forever_outlined,
+                    color: ThemeConfig.orange.withOpacity(.8),
+                  ),
                 ),
-              ),
               IconButton(
                 iconSize: 28,
                 padding: EdgeInsets.zero,
@@ -172,7 +173,7 @@ class _FilterState extends State<Filter> {
     CharactersFilter filter = clean
         ? const CharactersFilter()
         : CharactersFilter(
-            name: _nameController.text,
+            name: _nameController.text != '' ? _nameController.text : null,
             status: _status,
             gender: _gender,
           );
