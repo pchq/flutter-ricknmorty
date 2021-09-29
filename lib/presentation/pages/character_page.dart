@@ -31,29 +31,35 @@ class CharacterPage extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               titlePadding: const EdgeInsets.only(bottom: 15, left: 15, right: 15),
-              background: Stack(
-                alignment: Alignment.bottomCenter,
-                children: [
-                  CachedImage(person.image),
-                  Container(
-                    height: imgHeight,
-                    padding: EdgeInsets.zero,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        stops: const [
-                          .1,
-                          1,
-                        ],
-                        colors: [
-                          Colors.black.withOpacity(0),
-                          Colors.black,
-                        ],
+              background: Hero(
+                tag: 'img_${person.id}',
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      CachedImage(person.image),
+                      Container(
+                        height: imgHeight,
+                        padding: EdgeInsets.zero,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            stops: const [
+                              .1,
+                              1,
+                            ],
+                            colors: [
+                              Colors.black.withOpacity(0),
+                              Colors.black,
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
             expandedHeight: imgHeight,

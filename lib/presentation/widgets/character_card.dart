@@ -24,15 +24,21 @@ class CharacterCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Container(
-              width: 100,
-              height: 100,
-              clipBehavior: Clip.antiAlias,
-              decoration: const BoxDecoration(
-                color: ThemeConfig.mediumGrey,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
+            Hero(
+              tag: 'img_${person.id}',
+              child: Material(
+                type: MaterialType.transparency,
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  clipBehavior: Clip.antiAlias,
+                  decoration: const BoxDecoration(
+                    color: ThemeConfig.mediumGrey,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                  child: CachedImage(person.image),
+                ),
               ),
-              child: CachedImage(person.image),
             ),
             Expanded(
               child: Container(
