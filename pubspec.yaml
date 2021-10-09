@@ -29,36 +29,37 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  json_annotation: ^4.1.0
-  equatable: ^2.0.3
-  # dartz: ^0.10.0
-  http: ^0.13.3
-  shared_preferences: ^2.0.7
-  connectivity_plus: ^1.1.0
-  flutter_bloc: ^7.3.0
+  # json_annotation: ^4.1.0
+  # equatable: ^2.0.3
+  # # dartz: ^0.10.0
+  # http: ^0.13.3
+  # shared_preferences: ^2.0.7
+  # connectivity_plus: ^1.1.0
+  # flutter_bloc: ^7.3.0
+  # get_it: ^7.2.0
+  # cached_network_image: ^3.1.0
+  # cupertino_icons: ^1.0.2
+  # intl: ^0.17.0
+
+  layer_domain:
+    path: ./packages/layer_domain
+  module_models:
+    path: ./packages/module_models
   get_it: ^7.2.0
-  cached_network_image: ^3.1.0
+  flutter_bloc: ^7.3.0
 
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
-  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
-  flutter_lints: ^1.0.0
   
-  json_serializable: ^5.0.1 # RUN: flutter pub run build_runner build/watch
-  build_runner: ^2.1.2
+  # json_serializable: ^5.0.1 # RUN: flutter pub run build_runner build/watch
+  # build_runner: ^2.1.2
   flutter_launcher_icons: "^0.9.2"
+
+  dev_analyzer:
+    path: ./packages/dev_analyzer
+  dart_code_metrics:
 
 flutter_icons: # RUN: flutter pub run flutter_launcher_icons:main
   android: true

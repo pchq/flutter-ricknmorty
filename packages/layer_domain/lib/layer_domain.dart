@@ -1,7 +1,6 @@
-library layer_domain;
+// for layer data
+export '/src/repository/i_users_repository.dart';
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+// for layer UI
+export '/src/bloc/users/users_cubit.dart';
+export '/src/service_provider.dart';
