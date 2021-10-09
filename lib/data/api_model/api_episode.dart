@@ -1,7 +1,10 @@
 import 'package:equatable/equatable.dart';
-import 'package:ricknmorty/domain/model/character.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-class Episode extends Equatable {
+part 'api_episode.g.dart';
+
+@JsonSerializable()
+class ApiEpisode extends Equatable {
   /// The id of the episode.
   final int id;
 
@@ -9,21 +12,22 @@ class Episode extends Equatable {
   final String name;
 
   /// The air date of the episode.
+  @JsonKey(name: 'air_date')
   final String airDate;
 
   /// The code of the episode.
   final String episode;
 
-  /// List of characters ids who have been seen in the episode.
-  final List<int> characters;
+  /// (urls) List of characters who have been seen in the episode.
+  final List<String> characters;
 
   /// (url) Link to the episode's own endpoint.
   final String url;
 
   ///  Time at which the episode was created in the database.
-  final DateTime created;
+  final String created;
 
-  const Episode({
+  const ApiEpisode({
     required this.id,
     required this.name,
     required this.airDate,
@@ -32,6 +36,13 @@ class Episode extends Equatable {
     required this.url,
     required this.created,
   });
+
+  factory ApiEpisode.fromJson(Map<String, dynamic> json) => _$ApiEpisodeFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ApiEpisodeToJson(this);
+
+  @override
+  bool? get stringify => true;
 
   @override
   List<Object?> get props => [

@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ricknmorty/common/theme_config.dart';
 import 'package:ricknmorty/core/service/locator_service.dart';
 import 'package:ricknmorty/presentation/bloc/characters/characters_cubit.dart';
-import 'package:ricknmorty/presentation/pages/characters_page.dart';
+import 'package:ricknmorty/presentation/pages/page_wrapper.dart';
 
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<CharactersCubit>(create: (context) => locator<CharactersCubit>()..load()),
       ],
       child: MaterialApp(
-        home: CharactersPage(),
+        home: const PageWrapper(),
         theme: ThemeConfig.appTheme,
       ),
     );
