@@ -1,30 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:layer_domain/layer_domain.dart';
+
 import 'package:ricknmorty/common/theme_config.dart';
-import 'package:ricknmorty/core/service/locator_service.dart';
-import 'package:ricknmorty/presentation/bloc/characters/characters_cubit.dart';
-import 'package:ricknmorty/presentation/pages/page_wrapper.dart';
+import 'package:ricknmorty/pages/page_wrapper.dart';
 
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
   ));
   WidgetsFlutterBinding.ensureInitialized();
-  await LocatorService().init();
+  // await ServiceProvider().init();
+  ServiceProvider().init();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final locator = LocatorService.locator;
-
   MyApp({Key? key}) : super(key: key);
+
+  final ServiceProvider serviceProvider = ServiceProvider();
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<CharactersCubit>(create: (context) => locator<CharactersCubit>()..load()),
+        BlocProvider<CharactersCubit>(
+          create: (context) => serviceProvider.get<CharactersCubit>()..load(),
+        ),
       ],
       child: MaterialApp(
         home: const PageWrapper(),

@@ -1,11 +1,11 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:module_model/module_model.dart';
+import 'package:module_models/module_models.dart';
 
 abstract class IRemoteDataSource {
-  Future<List<User>> loadUsers();
+  /// Calls https://rickandmortyapi.com/api/character/??page={page}&name={name}&gender={gender}&... endpoint
+  Future<List<ApiCharacter>> loadCharacters(int page, CharactersFilter? filter);
 }
 
 class RemoteDataSource implements IRemoteDataSource {
@@ -13,19 +13,30 @@ class RemoteDataSource implements IRemoteDataSource {
 
   RemoteDataSource({required this.client});
 
-  @override
-  Future<List<User>> loadUsers() async {
+  Future<List<ApiCharacter>> _getAllByUrl(String url) async {
     try {
-      final response = await client.get(Uri.parse('https://jsonplaceholder.typicode.com/users'));
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
+      final responce = await client.get(
+        Uri.parse(url),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (responce.statusCode == 200) {
+        final data = json.decode(responce.body);
 
-        return (data as List).map((e) => User.fromJson(e)).toList();
+        return (data['results'] as List).map((item) => ApiCharacter.fromJson(item)).toList();
       } else {
-        throw HttpException('Wrong status code: ${response.statusCode}');
+        return [];
       }
     } catch (e) {
       throw Exception(e);
     }
+  }
+
+  @override
+  Future<List<ApiCharacter>> loadCharacters(int page, CharactersFilter? filter) async {
+    List<ApiCharacter> characters = await _getAllByUrl(
+      'https://rickandmortyapi.com/api/character/?page=$page${filter?.toQueryString()}',
+    );
+
+    return characters;
   }
 }

@@ -1,8 +1,8 @@
 import 'package:get_it/get_it.dart';
 
-import 'package:module_data/module_data.dart' as data_layer;
+import 'package:layer_data/layer_data.dart' as layer_data;
 
-import '/src/bloc/users/users_cubit.dart';
+import '/src/bloc/characters/characters_cubit.dart';
 
 class ServiceProvider {
   static final _getIt = GetIt.I;
@@ -12,9 +12,10 @@ class ServiceProvider {
   static final I = ServiceProvider();
 
   void init() {
-    data_layer.ServiceProvider().init();
-    _getIt.registerLazySingleton<UsersCubit>(
-      () => UsersCubit(usersRepository: _getIt()),
+    layer_data.ServiceProvider().init();
+
+    _getIt.registerLazySingleton<CharactersCubit>(
+      () => CharactersCubit(charactersRepository: _getIt()),
     );
   }
 }

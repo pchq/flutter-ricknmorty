@@ -1,0 +1,71 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "ricknmorty",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "ricknmorty (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "dev_analyzer",
+            "cwd": "packages\\dev_analyzer",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "dev_analyzer (profile mode)",
+            "cwd": "packages\\dev_analyzer",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "layer_data",
+            "cwd": "packages\\layer_data",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "layer_data (profile mode)",
+            "cwd": "packages\\layer_data",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "layer_domain",
+            "cwd": "packages\\layer_domain",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "layer_domain (profile mode)",
+            "cwd": "packages\\layer_domain",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "module_models",
+            "cwd": "packages\\module_models",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "module_models (profile mode)",
+            "cwd": "packages\\module_models",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        }
+    ]
+}

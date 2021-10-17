@@ -5,9 +5,13 @@ analyzer:
     - dart_code_metrics
 
   exclude: 
-    - analysis_options.yaml
-    - "**.g.dart"
-    - "**.freezed.dart"
+    - "**/analysis_options.yaml"
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/*_test.dart"
+   
+  errors: 
+    invalid_annotation_target: ignore
 
 dart_code_metrics:
    anti-patterns:
