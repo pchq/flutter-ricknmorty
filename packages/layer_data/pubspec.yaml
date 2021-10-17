@@ -16,6 +16,8 @@ dependencies:
     path: ../module_models
   http: ^0.13.3
   get_it: ^7.2.0
+  shared_preferences: ^2.0.7
+  connectivity_plus: ^1.1.0
 
 dev_dependencies:
   flutter_test:
