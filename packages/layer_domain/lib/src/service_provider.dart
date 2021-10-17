@@ -11,8 +11,8 @@ class ServiceProvider {
 
   static final I = ServiceProvider();
 
-  void init() {
-    layer_data.ServiceProvider().init();
+  Future<void> init() async {
+    await layer_data.ServiceProvider().init();
 
     _getIt.registerLazySingleton<CharactersCubit>(
       () => CharactersCubit(charactersRepository: _getIt()),

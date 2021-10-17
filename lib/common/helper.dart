@@ -3,6 +3,7 @@ class Helper {
   /// Capitalize first symbol if `capitalize = true`
   static String enumValue(stringWithDot, [bool capitalize = false]) {
     String s = stringWithDot.toString().split('.')[1];
+
     return capitalize ? Helper.capitalize(s) : s;
   }
 

@@ -4,16 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:layer_domain/layer_domain.dart';
 
-import 'package:ricknmorty/common/theme_config.dart';
-import 'package:ricknmorty/pages/page_wrapper.dart';
+import '/common/theme_config.dart';
+import '/pages/page_wrapper.dart';
 
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
   ));
   WidgetsFlutterBinding.ensureInitialized();
-  // await ServiceProvider().init();
-  ServiceProvider().init();
+  await ServiceProvider().init();
   runApp(MyApp());
 }
 
